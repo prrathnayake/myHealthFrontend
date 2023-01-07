@@ -1,0 +1,27 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+
+.home-screen {
+  height: calc(100vh - 80px);
+  width: 100%;
+}
+
+.home-image-panel {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.image-panel {
+  margin-top: 60px;
+  height: 360px;
+}
+
+.panel-image {
+  height: 340px;
+  width: 600px;
+  background-attachment: fixed;
+  position: relative;
+}

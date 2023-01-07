@@ -1,0 +1,77 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.Login{
+    height:calc(100vh);
+    background-image: linear-gradient(rgba(4,9,30,0.7), rgba(4,9,30,0.7)), url('../../resources/Images/cover_ehealth.png');
+    text-align: center;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+} 
+
+.login-form{
+    width: 430px;
+    height: 400px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 55%;
+    color: white;
+}
+
+.form{
+    background:rgba(110, 110, 110, 0.3);
+    padding: 20px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    align-items: center;
+}
+
+.login-form input{
+    width: 80%;
+    height: 30px;
+}
+
+.login-form .label{
+    margin-top: 20px;
+    font-size: 25px;
+}
+
+.login-form button{
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 15px;
+}
+
+.extra-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.extra-login button {
+    width: 80%;
+    display: flex;
+    align-items: center;
+}
+
+.forget{
+    padding-top: 10px;
+    font-size: 20px;
+}
+
+.forget-link{
+  color: white;
+}
+
+.err-msg {
+    color: red;
+    padding-top: 10px;
+    font-size: 20px;
+}
