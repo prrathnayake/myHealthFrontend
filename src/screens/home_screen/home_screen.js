@@ -20,32 +20,34 @@ export default function HomeScreen() {
       slideIndex = 1;
     }
     slides[slideIndex - 1].style.display = "block";
-    setTimeout(showSlides, 2000);
+    setTimeout(showSlides, 5000);
   }
 
   return (
     <>
       <NavBar />
       <div className="home-screen">
-        <div className="home-image-panel">
-          <div className="image-panel">
-            <img
-              className="panel-image"
-              src={require("../../resources/Images/home1.jpg")}
-              alt="home1"
-            />
-            <img
-              className="panel-image"
-              src={require("../../resources/Images/home2.jpg")}
-              alt="home2"
-            />
-            <img
-              className="panel-image"
-              src={require("../../resources/Images/home3.jpg")}
-              alt="home3"
-            />
-          </div>
+       <div> <p className="">Welcome</p>
+      </div>
+      <div className="home-image-panel">
+        <div className="image-panel">
+          <img
+            className="panel-image"
+            src={require("../../resources/Images/home1.jpg")}
+            alt="home1"
+          />
+          <img
+            className="panel-image"
+            src={require("../../resources/Images/home2.jpg")}
+            alt="home2"
+          />
+          <img
+            className="panel-image"
+            src={require("../../resources/Images/home3.jpg")}
+            alt="home3"
+          />
         </div>
+      </div>
       </div>
     </>
   );

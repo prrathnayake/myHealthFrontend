@@ -1,0 +1,23 @@
+.add-staff-screen {
+  padding: 50px;
+}
+
+.add-staff-screen-title {
+}
+
+.add-staff-screen-form {
+  padding: 0px 20px;
+}
+
+.add-staff-screen-input-div {
+  padding: 10px 0 10px 0;
+}
+
+.add-staff-screen-input-div input, select{
+    margin-left: 10px;
+    padding: 5px;
+  }
+  
+.add-staff-screen-form-button {
+  padding: 10px 20px;
+}

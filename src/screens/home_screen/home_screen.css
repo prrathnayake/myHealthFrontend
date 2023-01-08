@@ -16,12 +16,12 @@
 
 .image-panel {
   margin-top: 60px;
-  height: 360px;
+  height: 300px;
 }
 
 .panel-image {
-  height: 340px;
-  width: 600px;
+  height: 300px;
+  width: 500px;
   background-attachment: fixed;
   position: relative;
 }
