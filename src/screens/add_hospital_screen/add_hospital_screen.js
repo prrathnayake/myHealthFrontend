@@ -1,13 +1,32 @@
 import React, { useState } from "react";
 import "./add_hospital_screen.css";
 import NavBar from "../../components/navBar/navBar";
+import axios from "axios";
+
 
 export default function AddHospitalScreen() {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [mobile, setMoble] = useState("");
 
-  const register = () => {};
+  const register = async () => {
+    await axios({
+      method: "POST",
+      url: "http://localhost:3001/hospitals/addHospital",
+      data: {
+        name: name,
+        address: address,
+        mobile: mobile
+      },
+    }).catch(function (error) {
+      console.log(error);
+    });
+
+    setName("");
+    setAddress("");
+    setMoble("");
+    
+  };
   return (
     <>
       <NavBar />

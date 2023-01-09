@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./add_staff_screen.css";
 import NavBar from "../../components/navBar/navBar";
+import axios from "axios";
 
 export default function AddStaffScreen() {
   const [firstName, setFirstName] = useState("");
@@ -10,10 +11,62 @@ export default function AddStaffScreen() {
   const [role, setRole] = useState("");
   const [area, setArea] = useState("");
 
-  const roleList = ["Doctor", "Admin"];
-  const areaList = ["Neurologist", "Radiologist", "Family physicians"];
+  const [roleList, setRoleList] = useState([]);
+  const [areaList, setAreaList] = useState([]);
 
-  const register = () => {};
+  const getRoleList = async () => {
+    await axios({
+      method: "GET",
+      url: "http://localhost:3001/role",
+    })
+      .then((res) => {
+        setRoleList(res.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const getAreaList = async () => {
+    await axios({
+      method: "GET",
+      url: "http://localhost:3001/area",
+    })
+      .then((res) => {
+        setAreaList(res.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getRoleList();
+    getAreaList();
+  }, []);
+
+  const register = async () => {
+    await axios({
+      method: "POST",
+      url: "http://localhost:3001/staffs/addStaff",
+      data: {
+        firstName: firstName,
+        lastName: lastName,
+        area: area,
+        role: role,
+        mobile: mobile,
+        email: email,
+      },
+    }).catch(function (error) {
+      console.log(error);
+    });
+
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setMoble("");
+    
+  };
   return (
     <>
       <NavBar />
@@ -57,7 +110,7 @@ export default function AddStaffScreen() {
             >
               <option value="" />
               {areaList.map((area) => (
-                <option value={area}>{area}</option>
+                <option value={area["areaID"]}>{area["discription"]}</option>
               ))}
             </select>
           </div>
@@ -98,13 +151,13 @@ export default function AddStaffScreen() {
             >
               <option value="" />
               {roleList.map((role) => (
-                <option value={role}>{role}</option>
+                <option value={role["roleID"]}>{role["discription"]}</option>
               ))}
             </select>
           </div>
           <button
             className="add-staff-screen-form-button"
-            type="submit"
+            type="button"
             onClick={register}
           >
             LogIn

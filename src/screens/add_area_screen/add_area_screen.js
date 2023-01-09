@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import NavBar from "../../components/navBar/navBar";
+import axios from "axios";
 
 export default function AddAreaScreen() {
   const [area, setArea] = useState("");
 
-  const submit = () => {};
+  const submit = async () => {
+    window.location.reload(false);
+    await axios({
+      method: 'POST',
+      url: 'http://localhost:3001/area',
+      data: {
+        area: area.toLowerCase()
+      }
+    }).catch(function (error) {
+      console.log(error);
+    });
+    setArea("");
+  };
+
   return (
     <>
       <NavBar />
@@ -26,7 +40,7 @@ export default function AddAreaScreen() {
 
           <button
             className="add-staff-screen-form-button"
-            type="submit"
+            type="button"
             onClick={submit}
           >
             Add

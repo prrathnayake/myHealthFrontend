@@ -6,6 +6,7 @@ import AddStaffScreen from "./screens/add_staff_screen/add_staff_screen";
 import AddRoleScreen from "./screens/add_role_screen/add_role_screen";
 import AddAreaScreen from "./screens/add_area_screen/add_area_screen";
 import AddHospitalScreen from "./screens/add_hospital_screen/add_hospital_screen";
+import AddAvailableTimeScreen from "./screens/add_available_time_screen/add_available_time_screen";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/addRole" element={<AddRoleScreen />}/>
         <Route path="/addArea" element={<AddAreaScreen />}/>
         <Route path="/addHospital" element={<AddHospitalScreen />}/>
+        <Route path="/addAvailableTime" element={<AddAvailableTimeScreen />}/>
         <Route
           path="*"
           element={
