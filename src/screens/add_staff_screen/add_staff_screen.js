@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./add_staff_screen.css";
 import NavBar from "../../components/navBar/navBar";
 import axios from "axios";
+import apiEndpoint from "../../utils/api";
 
 export default function AddStaffScreen() {
   const [firstName, setFirstName] = useState("");
@@ -17,7 +18,7 @@ export default function AddStaffScreen() {
   const getRoleList = async () => {
     await axios({
       method: "GET",
-      url: "http://localhost:3001/role",
+      url: `${apiEndpoint}role`,
     })
       .then((res) => {
         setRoleList(res.data);
@@ -30,7 +31,7 @@ export default function AddStaffScreen() {
   const getAreaList = async () => {
     await axios({
       method: "GET",
-      url: "http://localhost:3001/area",
+      url: `${apiEndpoint}area`,
     })
       .then((res) => {
         setAreaList(res.data);
@@ -48,7 +49,7 @@ export default function AddStaffScreen() {
   const register = async () => {
     await axios({
       method: "POST",
-      url: "http://localhost:3001/staffs/addStaff",
+      url: `${apiEndpoint}staffs/addStaff`,
       data: {
         firstName: firstName,
         lastName: lastName,

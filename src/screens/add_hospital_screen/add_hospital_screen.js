@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./add_hospital_screen.css";
 import NavBar from "../../components/navBar/navBar";
 import axios from "axios";
+import apiEndpoint from "../../utils/api";
 
 
 export default function AddHospitalScreen() {
@@ -12,7 +13,7 @@ export default function AddHospitalScreen() {
   const register = async () => {
     await axios({
       method: "POST",
-      url: "http://localhost:3001/hospitals/addHospital",
+      url: `${apiEndpoint}hospitals/addHospital`,
       data: {
         name: name,
         address: address,

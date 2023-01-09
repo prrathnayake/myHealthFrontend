@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NavBar from "../../components/navBar/navBar";
 import axios from "axios";
+import apiEndpoint from "../../utils/api";
 
 export default function AddRoleScreen() {
   const [role, setRole] = useState("");
@@ -9,7 +10,7 @@ export default function AddRoleScreen() {
     window.location.reload(false);
     await axios({
       method: 'POST',
-      url: 'http://localhost:3001/role',
+      url: `${apiEndpoint}role`,
       data: {
         role: role.toLowerCase()
       }

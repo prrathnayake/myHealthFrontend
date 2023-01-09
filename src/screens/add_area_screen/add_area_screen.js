@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import NavBar from "../../components/navBar/navBar";
 import axios from "axios";
+import apiEndpoint from "../../utils/api";
+
 
 export default function AddAreaScreen() {
   const [area, setArea] = useState("");
@@ -9,7 +11,7 @@ export default function AddAreaScreen() {
     window.location.reload(false);
     await axios({
       method: 'POST',
-      url: 'http://localhost:3001/area',
+      url: `${apiEndpoint}area`,
       data: {
         area: area.toLowerCase()
       }
