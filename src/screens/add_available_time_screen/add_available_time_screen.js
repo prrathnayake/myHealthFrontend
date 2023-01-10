@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./add_available_time_screen.css";
 import NavBar from "../../components/navBar/navBar";
 import dayjs from "dayjs";
@@ -6,6 +6,8 @@ import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import axios from "axios";
+import apiEndpoint from "../../utils/api";
 
 export default function AddAvailableTimeScreen() {
   const [startTime, setStartTime] = useState(dayjs("2018-01-01T00:00:00.000Z"));
@@ -14,12 +16,8 @@ export default function AddAvailableTimeScreen() {
   const [hospital, setHospital] = useState("");
   const [day, setDay] = useState("");
 
-  const doctorList = ["Dr.Pasan", "Dr.Perera"];
-  const hospitalList = [
-    "Sr i Jayawardanapura",
-    "Radiologist",
-    "Family physicians",
-  ];
+  const [doctorList, setDoctorList] = useState([]);
+  const [hospitalList, setHospitalList] = useState([]);
   const dayOfWeek = [
     "Sunday",
     "Monday",
@@ -30,6 +28,37 @@ export default function AddAvailableTimeScreen() {
     "Saturday",
   ];
 
+  useEffect(() => {
+    getHospitalList();
+    getDoctorList();
+  }, []);
+
+  const getDoctorList = async () => {
+    await axios({
+      method: "GET",
+      url: `${apiEndpoint}doctors/dropdown`,
+    })
+      .then((res) => {
+        setDoctorList(res.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const getHospitalList = async () => {
+    await axios({
+      method: "GET",
+      url: `${apiEndpoint}hospitals/dropdown`,
+    })
+      .then((res) => {
+        setHospitalList(res.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const handleStartTime = (newValue) => {
     setStartTime(newValue);
   };
@@ -38,7 +67,23 @@ export default function AddAvailableTimeScreen() {
     setEndTime(newValue);
   };
 
-  const register = () => {};
+  const register = async () => {
+    await axios({
+      method: "POST",
+      url: `${apiEndpoint}addAvailableTime`,
+      data: {
+        doctorID: doctor,
+        hospitalID: hospital,
+        dayOfWeek: day,
+        startTime: startTime.format('HH:mm:ss'),
+        endTime: endTime.format('HH:mm:ss'),
+      },
+    }).catch(function (error) {
+      console.log(error);
+    });
+    
+  };
+
   return (
     <>
       <NavBar />
@@ -58,7 +103,7 @@ export default function AddAvailableTimeScreen() {
             >
               <option value="" />
               {doctorList.map((doctor) => (
-                <option value={doctor}>{doctor}</option>
+                <option value={doctor['staffID']}>Dr. {doctor['firstName']} {doctor['lastName']}</option>
               ))}
             </select>
           </div>
@@ -75,7 +120,7 @@ export default function AddAvailableTimeScreen() {
             >
               <option value="" />
               {hospitalList.map((hospital) => (
-                <option value={hospital}>{hospital}</option>
+                <option value={hospital['hospitalID']}>{hospital['name']}</option>
               ))}
             </select>
           </div>
@@ -119,7 +164,7 @@ export default function AddAvailableTimeScreen() {
 
           <button
             className="add-staff-screen-form-button"
-            type="submit"
+            type="button"
             onClick={register}
           >
             Submit

@@ -1,38 +1,55 @@
-Bar*{
-    padding: 0;
-    margin: 0;
+Bar* {
+  padding: 0;
+  margin: 0;
 }
 
 .Navbar {
-    background-color: #192537;
-    height: 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background-color: #192537;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.Navbar img{
-    margin-left: 20px;
-    height: 60%;
+.Navbar img {
+  margin-left: 20px;
+  height: 60%;
 }
 
-.list-item{
-    display: flex;
+.list-item {
+  display: flex;
 }
 
-.list-item li{
-    list-style: none;
-    padding-left: 15px;
-    padding-right: 15px;
-    color: white;
+.list-item li {
+  list-style: none;
+  padding-left: 15px;
+  padding-right: 15px;
+  color: white;
 }
 
 .text-link {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 
-.login-btn{
-    margin-right: 20px;
-    padding: 10px 20px 10px 20px;
+.login-btn {
+  margin-right: 20px;
+  padding: 10px 20px 10px 20px;
+}
+
+.sub-nav {
+  display: none;
+}
+
+.sub-link {
+    padding: 5px 0px;
+  }
+
+.main-nav:hover>.sub-nav{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  padding: 10px 20px;
+  background-color: black;
 }
