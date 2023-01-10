@@ -1,15 +1,40 @@
 import React from "react";
 import "./login_screen.css";
+import axios from "axios";
+import apiEndpoint from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginScreen() {
   const navigate = useNavigate();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  // const [err, setErr] = React.useState('')
+  const [err, setErr] = React.useState('')
 
-  const login = () => {
-    return navigate("/");
+  const login = async(e) => {
+    e.preventDefault()
+    if (email !== '' || password !== ''){
+      try {
+        setEmail('')
+        setPassword('')
+        await axios.post(`${apiEndpoint}auth/login`, {
+          email: email,
+          password: password
+        }).then((res) => {
+          if (res.data.accessToken)
+          {
+            localStorage.setItem('token', JSON.stringify(res.data.accessToken))
+            localStorage.setItem('role', JSON.stringify(res.data.role))
+            if(res.data.role === 'admin') return navigate(`/admin`)
+            navigate(`/`)
+          }else {
+            setErr(res.data)
+          }
+        })       
+      }catch(error) {
+        console.log(error)
+      }
+      
+    }
   };
   return (
     <div className="Login">
@@ -36,7 +61,7 @@ export default function LoginScreen() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {/* {err ? <p className='err-msg'>{err}</p> : null} */}
+          {err ? <p className='err-msg'>{err}</p> : null}
           <button type="submit" onClick={login}>
             LogIn
           </button>
