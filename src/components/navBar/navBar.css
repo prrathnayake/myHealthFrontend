@@ -52,4 +52,5 @@ Bar* {
   margin-left: 20px;
   padding: 10px 20px;
   background-color: black;
+  z-index: 1;
 }
