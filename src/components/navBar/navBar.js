@@ -25,12 +25,12 @@ export default function NavBar() {
           </Link>
         </li>
         <li>
-          <Link className="text-link" to="/">
+          <Link className="text-link" to="/patients">
             MY PATIENTS
           </Link>
         </li>
         <li>
-          <Link className="text-link" to="/">
+          <Link className="text-link" to="/profile">
             PROFILE
           </Link>
         </li>

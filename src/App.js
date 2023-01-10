@@ -7,6 +7,8 @@ import AddRoleScreen from "./screens/add_role_screen/add_role_screen";
 import AddAreaScreen from "./screens/add_area_screen/add_area_screen";
 import AddHospitalScreen from "./screens/add_hospital_screen/add_hospital_screen";
 import AddAvailableTimeScreen from "./screens/add_available_time_screen/add_available_time_screen";
+import PatientsScreen from "./screens/patients_screen/patients_screen";
+import ProfileScreen from "./screens/profile_screen/profile_screen";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/addArea" element={<AddAreaScreen />}/>
         <Route path="/addHospital" element={<AddHospitalScreen />}/>
         <Route path="/addAvailableTime" element={<AddAvailableTimeScreen />}/>
+        <Route path="/patients" element={<PatientsScreen />}/>
+        <Route path="/profile" element={<ProfileScreen />}/>
         <Route
           path="*"
           element={

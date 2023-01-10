@@ -5,7 +5,6 @@ export default function AppointmentScreen() {
   return (
     <>
       <NavBar />
-      <div>AppointmentScreen</div>
     </>
   );
 }
