@@ -1,0 +1,43 @@
+.appointment-card {
+  padding: 10px 30px;
+  background-color: gray;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.appointment-card>div {
+   padding-bottom: 10px;
+  }
+
+.appoinrment-date {
+  display: flex;
+  flex-direction: row;
+}
+
+.appoinrment-date p {
+  padding-right: 5px;
+}
+
+.appoinrment-times {
+  display: flex;
+  flex-direction: row;
+}
+
+.appoinrment-startTime {
+  display: flex;
+  flex-direction: row;
+}
+
+.appoinrment-startTime p {
+  padding-right: 5px;
+}
+
+.appoinrment-endTime {
+  display: flex;
+  flex-direction: row;
+  padding-left: 20px;
+}
+
+.appoinrment-endTime p {
+  padding-right: 5px;
+}

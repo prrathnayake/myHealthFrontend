@@ -1,0 +1,17 @@
+.appointment-screen-body{
+    display: flex;
+    flex-direction: row;
+    padding: 40px;
+}
+
+.date-picker{
+width: 300px;
+}
+
+.appointment-bar{
+    padding: 20px 50px;
+    width: 100%;
+    overflow: scroll;
+    height: 70vh;
+}
+
