@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     padding: 40px;
+    overflow: hidden;
 }
 
 .date-picker{
@@ -12,6 +13,6 @@ width: 300px;
     padding: 20px 50px;
     width: 100%;
     overflow: scroll;
-    height: 70vh;
+    height: 65vh;
 }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import './appointment card.css';
+import dayjs from "dayjs";
 
 export default function AppointmentCard(prop) {
 
@@ -7,7 +8,7 @@ export default function AppointmentCard(prop) {
     <div className="appointment-card">
       <div className="patient-name">Name - {prop.scedule['firstName']} {prop.scedule['lastName']}</div>
       <div className="appoinrment-date">
-        <p>Date - </p> <p>{prop.scedule['scheduledDate']}</p>
+        <p>Date - </p> <p>{dayjs(prop.scedule['scheduledDate']).format('YYYY/mm/DD')}</p>
       </div>
       <div className="appoinrment-times">
         <div className="appoinrment-startTime">

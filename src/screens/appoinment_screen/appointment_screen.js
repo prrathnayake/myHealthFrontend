@@ -14,16 +14,15 @@ export default function AppointmentScreen() {
   const [date, setDate] = React.useState(dayjs("2022-04-07"));
   const [scheduleList, setScheduleList] = useState([]);
 
-  const isWeekend = (date) => {
-    const day = date.day();
-    return day === 0 || day === 6;
-  };
+  // const isWeekend = (date) => {
+  //   const day = date.day();
+  //   return day === 0 || day === 6;
+  // };
 
   const getSchedules = async () => {
-
     await axios({
       method: "GET",
-      url: `${apiEndpoint}schedules/doctorId?id=2`,
+      url: `${apiEndpoint}schedules/doctorId?id=2&date=${date.format('YYYY-MM-DD')}`
     })
       .then((res) => {
         setScheduleList(res.data);
@@ -47,7 +46,7 @@ export default function AppointmentScreen() {
               orientation="portrait"
               openTo="day"
               value={date}
-              shouldDisableDate={isWeekend}
+              // shouldDisableDate={isWeekend}
               onChange={(newValue) => {
                 setDate(newValue);
               }}
