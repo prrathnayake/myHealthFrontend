@@ -11,7 +11,7 @@ import axios from "axios";
 import apiEndpoint from "../../utils/api";
 
 export default function AppointmentScreen() {
-  const [date, setDate] = React.useState(dayjs("2022-04-07"));
+  const [date, setDate] = React.useState(dayjs(Date.now()));
   const [scheduleList, setScheduleList] = useState([]);
 
   // const isWeekend = (date) => {
