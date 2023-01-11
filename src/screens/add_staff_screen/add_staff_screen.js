@@ -51,7 +51,7 @@ export default function AddStaffScreen() {
     }
     getRoleList();
     getAreaList();
-  }, []);
+  }, [navigate, role]);
 
   const register = async () => {
     await axios({
