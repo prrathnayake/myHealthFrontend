@@ -19,6 +19,7 @@ export default function AppointmentScreen() {
   //   return day === 0 || day === 6;
   // };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getSchedules = async () => {
     await axios({
       method: "GET",
@@ -34,7 +35,7 @@ export default function AppointmentScreen() {
 
   useEffect(() => {
     getSchedules();
-  }, [date]);
+  }, [date, getSchedules]);
   
   return (
     <>
