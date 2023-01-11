@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./add_available_time_screen.css";
 import NavBar from "../../components/navBar/navBar";
 import dayjs from "dayjs";
@@ -8,13 +8,17 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import axios from "axios";
 import apiEndpoint from "../../utils/api";
+import { roleContext } from "../../resources/contexts/role.js";
+import { useNavigate } from "react-router";
 
 export default function AddAvailableTimeScreen() {
+  const navigate = useNavigate();
   const [startTime, setStartTime] = useState(dayjs("2018-01-01T00:00:00.000Z"));
   const [endTime, setEndTime] = useState(dayjs("2018-01-01T00:00:00.000Z"));
   const [doctor, setDoctor] = useState("");
   const [hospital, setHospital] = useState("");
   const [day, setDay] = useState("");
+  const {role} = useContext( roleContext );
 
   const [doctorList, setDoctorList] = useState([]);
   const [hospitalList, setHospitalList] = useState([]);
@@ -29,9 +33,12 @@ export default function AddAvailableTimeScreen() {
   ];
 
   useEffect(() => {
+    if(role !== 1){
+      navigate(`/`);
+    }
     getHospitalList();
     getDoctorList();
-  }, []);
+  }, [navigate, role]);
 
   const getDoctorList = async () => {
     await axios({

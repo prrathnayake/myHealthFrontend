@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./add_staff_screen.css";
 import NavBar from "../../components/navBar/navBar";
 import axios from "axios";
 import apiEndpoint from "../../utils/api";
+import { roleContext } from "../../resources/contexts/role.js";
+import { useNavigate } from "react-router";
 
 export default function AddStaffScreen() {
+  const navigate = useNavigate();
+  const {role} = useContext( roleContext );
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMoble] = useState("");
-  const [role, setRole] = useState("");
+  const [doctorRole, setDoctorRole] = useState("");
   const [area, setArea] = useState("");
 
   const [roleList, setRoleList] = useState([]);
@@ -42,6 +46,9 @@ export default function AddStaffScreen() {
   };
 
   useEffect(() => {
+    if(role !== 1){
+      navigate(`/`);
+    }
     getRoleList();
     getAreaList();
   }, []);
@@ -147,8 +154,8 @@ export default function AddStaffScreen() {
               id="role"
               name="role"
               className="add-staff-screen-dropdown"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
+              value={doctorRole}
+              onChange={(e) => setDoctorRole(e.target.value)}
             >
               <option value="" />
               {roleList.map((role) => (

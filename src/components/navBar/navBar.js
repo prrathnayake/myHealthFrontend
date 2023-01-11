@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./navBar.css";
 import { Link, useNavigate } from "react-router-dom";
+import { roleContext } from "../../resources/contexts/role.js";
 
 export default function NavBar() {
   const navigate = useNavigate();
+  const {role} = useContext( roleContext );
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -11,6 +13,7 @@ export default function NavBar() {
     return navigate("/login");
   };
   return (
+    
     <div className="Navbar">
       <img src={require("../../resources/Images/logo.png")} alt="Logo" />
       <ul className="list-item">
@@ -34,25 +37,27 @@ export default function NavBar() {
             PROFILE
           </Link>
         </li>
-        <li>
-          <div className="main-nav">
-            <p>ADMINISTRATION</p>
-            <div className="sub-nav">
-              <Link className="text-link sub-link" to="/addStaff">
-                ADD STAFF
-              </Link>
-              <Link className="text-link sub-link" to="/addRole">
-                ADD ROLE
-              </Link>
-              <Link className="text-link sub-link" to="/addArea">
-                ADD AREA
-              </Link>
-              <Link className="text-link sub-link" to="/addAvailableTime">
-                ADD AVAILABLE TIME
-              </Link>
+        {role === 1 ? (
+          <li>
+            <div className="main-nav">
+              <p>ADMINISTRATION</p>
+              <div className="sub-nav">
+                <Link className="text-link sub-link" to="/addStaff">
+                  ADD STAFF
+                </Link>
+                <Link className="text-link sub-link" to="/addRole">
+                  ADD ROLE
+                </Link>
+                <Link className="text-link sub-link" to="/addArea">
+                  ADD AREA
+                </Link>
+                <Link className="text-link sub-link" to="/addAvailableTime">
+                  ADD AVAILABLE TIME
+                </Link>
+              </div>
             </div>
-          </div>
-        </li>
+          </li>
+        ) : null}
       </ul>
       {!localStorage.getItem("token") ? (
         <button className="login-btn">LOGIN</button>

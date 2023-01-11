@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NavBar from "../../components/navBar/navBar";
 import "./appointment_screen.css";
 import dayjs from "dayjs";
@@ -9,10 +9,14 @@ import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import AppointmentCard from "./components/appintment_card";
 import axios from "axios";
 import apiEndpoint from "../../utils/api";
+import { roleContext } from "../../resources/contexts/role.js";
+import { useNavigate } from "react-router";
 
 export default function AppointmentScreen() {
-  const [date, setDate] = React.useState(dayjs(Date.now()));
+  const navigate = useNavigate();
+  const [date, setDate] = React.useState(dayjs(Date.now() + ( 3600 * 1000 * 24)));
   const [scheduleList, setScheduleList] = useState([]);
+  const {role} = useContext( roleContext );
 
   // const isWeekend = (date) => {
   //   const day = date.day();
@@ -34,8 +38,11 @@ export default function AppointmentScreen() {
   };
 
   useEffect(() => {
+    if(role !== 1){
+      navigate(`/`);
+    }
     getSchedules();
-  }, [date, getSchedules]);
+  }, [date, getSchedules, navigate, role]);
   
   return (
     <>

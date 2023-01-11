@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./login_screen.css";
 import axios from "axios";
 import apiEndpoint from "../../utils/api";
 import { useNavigate } from "react-router-dom";
+import { roleContext } from "../../resources/contexts/role.js";
 
 export default function LoginScreen() {
   const navigate = useNavigate();
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [err, setErr] = React.useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [err, setErr] = useState('');
+  const {setRole} = useContext(roleContext);
 
   const login = async(e) => {
     e.preventDefault()
@@ -23,7 +25,7 @@ export default function LoginScreen() {
           if (res.data.accessToken)
           {
             localStorage.setItem('token', JSON.stringify(res.data.accessToken))
-            localStorage.setItem('role', JSON.stringify(res.data.role))
+            setRole(res.data.role);
             if(res.data.role === 'admin') return navigate(`/admin`)
             navigate(`/`)
           }else {

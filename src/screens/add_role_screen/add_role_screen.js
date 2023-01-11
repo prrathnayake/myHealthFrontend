@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NavBar from "../../components/navBar/navBar";
 import axios from "axios";
 import apiEndpoint from "../../utils/api";
+import { roleContext } from "../../resources/contexts/role.js";
+import { useNavigate } from "react-router";
 
 export default function AddRoleScreen() {
-  const [role, setRole] = useState("");
+  const navigate = useNavigate();
+  const {role} = useContext( roleContext );
+  const [doctorRole, setDoctorRole] = useState("");
 
   const submit = async () => {
     window.location.reload(false);
@@ -17,8 +21,14 @@ export default function AddRoleScreen() {
     }).catch(function (error) {
       console.log(error);
     });
-    setRole("");
+    setDoctorRole("");
   };
+
+  useEffect(() => {
+    if(role !== 1){
+      navigate(`/`);
+    }
+  });
   
   return (
     <>
@@ -33,8 +43,8 @@ export default function AddRoleScreen() {
             <input
               placeholder="role"
               type="role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
+              value={doctorRole}
+              onChange={(e) => setDoctorRole(e.target.value)}
               required
             />
           </div>

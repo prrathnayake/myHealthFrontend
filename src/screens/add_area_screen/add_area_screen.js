@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NavBar from "../../components/navBar/navBar";
 import axios from "axios";
 import apiEndpoint from "../../utils/api";
-
+import { roleContext } from "../../resources/contexts/role.js";
+import { useNavigate } from "react-router";
 
 export default function AddAreaScreen() {
+  const navigate = useNavigate();
+  const {role} = useContext( roleContext );
   const [area, setArea] = useState("");
+  
 
   const submit = async () => {
     window.location.reload(false);
@@ -20,6 +24,12 @@ export default function AddAreaScreen() {
     });
     setArea("");
   };
+
+  useEffect(() => {
+    if(role !== 1){
+      navigate(`/`);
+    }
+  });
 
   return (
     <>

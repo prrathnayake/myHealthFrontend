@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./add_hospital_screen.css";
 import NavBar from "../../components/navBar/navBar";
 import axios from "axios";
 import apiEndpoint from "../../utils/api";
+import { roleContext } from "../../resources/contexts/role.js";
+import { useNavigate } from "react-router";
 
 
 export default function AddHospitalScreen() {
+  const navigate = useNavigate();
+  const {role} = useContext( roleContext );
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [mobile, setMoble] = useState("");
@@ -28,6 +32,12 @@ export default function AddHospitalScreen() {
     setMoble("");
     
   };
+
+  useEffect(() => {
+    if(role !== 1){
+      navigate(`/`);
+    }
+  });
   return (
     <>
       <NavBar />
