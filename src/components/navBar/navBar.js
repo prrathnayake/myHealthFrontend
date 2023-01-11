@@ -5,13 +5,14 @@ import { roleContext } from "../../resources/contexts/role.js";
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const {role} = useContext( roleContext );
+  const {role, setRole} = useContext( roleContext );
 
   const logout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("role");
+    setRole(0);
     return navigate("/login");
   };
+  
   return (
     
     <div className="Navbar">

@@ -6,10 +6,9 @@ import apiEndpoint from "../../utils/api";
 import { roleContext } from "../../resources/contexts/role.js";
 import { useNavigate } from "react-router";
 
-
 export default function AddHospitalScreen() {
   const navigate = useNavigate();
-  const {role} = useContext( roleContext );
+  const { role } = useContext(roleContext);
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [mobile, setMoble] = useState("");
@@ -21,7 +20,7 @@ export default function AddHospitalScreen() {
       data: {
         name: name,
         address: address,
-        mobile: mobile
+        mobile: mobile,
       },
     }).catch(function (error) {
       console.log(error);
@@ -30,11 +29,32 @@ export default function AddHospitalScreen() {
     setName("");
     setAddress("");
     setMoble("");
-    
+  };
+
+  const validate = async (accessToken) => {
+    await axios({
+      method: "POST",
+      url: `${apiEndpoint}auth/validateToken`,
+      data: {
+        accessToken: accessToken,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === "not authenticated") {
+          navigate(`/login`);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
-    if(role !== 1){
+    const accessToken = JSON.parse(localStorage.getItem("token"));
+    if (accessToken === null) return navigate("/login");
+    validate(accessToken);
+    if (role !== 1) {
       navigate(`/`);
     }
   });

@@ -37,12 +37,37 @@ export default function AppointmentScreen() {
       });
   };
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const validate = async (accessToken) => {
+      await axios({
+        method: "POST",
+        url: `${apiEndpoint}auth/validateToken`,
+        data: {
+          accessToken: accessToken,
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data === "not authenticated") {
+            navigate(`/login`);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+
   useEffect(() => {
+    const accessToken = JSON.parse(localStorage.getItem("token"));
+    if (accessToken === null) return navigate("/login");
+    validate(accessToken);
     if(role !== 1){
       navigate(`/`);
     }
     getSchedules();
-  }, [date, getSchedules, navigate, role]);
+  }, [date, getSchedules, navigate, role, validate]);
+
+
   
   return (
     <>

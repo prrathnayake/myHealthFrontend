@@ -18,7 +18,7 @@ export default function AddAvailableTimeScreen() {
   const [doctor, setDoctor] = useState("");
   const [hospital, setHospital] = useState("");
   const [day, setDay] = useState("");
-  const {role} = useContext( roleContext );
+  const { role } = useContext(roleContext);
 
   const [doctorList, setDoctorList] = useState([]);
   const [hospitalList, setHospitalList] = useState([]);
@@ -33,13 +33,36 @@ export default function AddAvailableTimeScreen() {
   ];
 
   useEffect(() => {
-    if(role !== 1){
+    const accessToken = JSON.parse(localStorage.getItem("token"));
+    if (accessToken === null) return navigate("/login");
+    validate(accessToken);
+    if (role !== 1) {
       navigate(`/`);
     }
     getHospitalList();
     getDoctorList();
-  }, [navigate, role]);
+  // eslint-disable-next-line no-use-before-define
+  }, [navigate, role, validate]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const validate = async (accessToken) => {
+    await axios({
+      method: "POST",
+      url: `${apiEndpoint}auth/validateToken`,
+      data: {
+        accessToken: accessToken,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === "not authenticated") {
+          navigate(`/login`);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   const getDoctorList = async () => {
     await axios({
       method: "GET",
@@ -82,13 +105,12 @@ export default function AddAvailableTimeScreen() {
         doctorID: doctor,
         hospitalID: hospital,
         dayOfWeek: day,
-        startTime: startTime.format('HH:mm:ss'),
-        endTime: endTime.format('HH:mm:ss'),
+        startTime: startTime.format("HH:mm:ss"),
+        endTime: endTime.format("HH:mm:ss"),
       },
     }).catch(function (error) {
       console.log(error);
     });
-    
   };
 
   return (
@@ -110,7 +132,9 @@ export default function AddAvailableTimeScreen() {
             >
               <option value="" />
               {doctorList.map((doctor) => (
-                <option value={doctor['staffID']}>Dr. {doctor['firstName']} {doctor['lastName']}</option>
+                <option value={doctor["staffID"]}>
+                  Dr. {doctor["firstName"]} {doctor["lastName"]}
+                </option>
               ))}
             </select>
           </div>
@@ -127,7 +151,9 @@ export default function AddAvailableTimeScreen() {
             >
               <option value="" />
               {hospitalList.map((hospital) => (
-                <option value={hospital['hospitalID']}>{hospital['name']}</option>
+                <option value={hospital["hospitalID"]}>
+                  {hospital["name"]}
+                </option>
               ))}
             </select>
           </div>

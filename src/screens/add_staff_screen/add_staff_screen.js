@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 
 export default function AddStaffScreen() {
   const navigate = useNavigate();
-  const {role} = useContext( roleContext );
+  const { role } = useContext(roleContext);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -45,15 +45,39 @@ export default function AddStaffScreen() {
       });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const validate = async (accessToken) => {
+    await axios({
+      method: "POST",
+      url: `${apiEndpoint}auth/validateToken`,
+      data: {
+        accessToken: accessToken,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === "not authenticated") {
+          navigate(`/login`);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
-    if(role !== 1){
+    const accessToken = JSON.parse(localStorage.getItem("token"));
+    if (accessToken === null) return navigate("/login");
+    validate(accessToken);
+    if (role !== 1) {
       navigate(`/`);
     }
     getRoleList();
     getAreaList();
-  }, [navigate, role]);
+  }, [navigate, role, validate]);
 
   const register = async () => {
+    const accessToken = JSON.parse(localStorage.getItem("token"));
     await axios({
       method: "POST",
       url: `${apiEndpoint}staffs/addStaff`,
@@ -64,16 +88,23 @@ export default function AddStaffScreen() {
         role: role,
         mobile: mobile,
         email: email,
+        accessToken: accessToken,
       },
-    }).catch(function (error) {
-      console.log(error);
-    });
+    })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === "not authenticated") {
+          navigate(`/login`);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
     setFirstName("");
     setLastName("");
     setEmail("");
     setMoble("");
-    
   };
   return (
     <>

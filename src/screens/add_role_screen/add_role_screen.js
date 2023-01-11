@@ -7,17 +7,17 @@ import { useNavigate } from "react-router";
 
 export default function AddRoleScreen() {
   const navigate = useNavigate();
-  const {role} = useContext( roleContext );
+  const { role } = useContext(roleContext);
   const [doctorRole, setDoctorRole] = useState("");
 
   const submit = async () => {
     window.location.reload(false);
     await axios({
-      method: 'POST',
+      method: "POST",
       url: `${apiEndpoint}role`,
       data: {
-        role: role.toLowerCase()
-      }
+        role: role.toLowerCase(),
+      },
     }).catch(function (error) {
       console.log(error);
     });
@@ -25,17 +25,39 @@ export default function AddRoleScreen() {
   };
 
   useEffect(() => {
-    if(role !== 1){
+    const accessToken = JSON.parse(localStorage.getItem("token"));
+    if (accessToken === null) return navigate("/login");
+    validate(accessToken);
+    if (role !== 1) {
       navigate(`/`);
     }
   });
-  
+
+  const validate = async (accessToken) => {
+    await axios({
+      method: "POST",
+      url: `${apiEndpoint}auth/validateToken`,
+      data: {
+        accessToken: accessToken,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === "not authenticated") {
+          navigate(`/login`);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <NavBar />
       <div className="add-staff-screen">
         <h1 className="add-staff-screen-title">New Role</h1>
-        <div className="add-staff-screen-form" >
+        <div className="add-staff-screen-form">
           <div className="add-staff-screen-input-div">
             <label className="label" name="role">
               New Role
