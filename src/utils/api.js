@@ -1,3 +1,3 @@
-const apiEndpoint = "http://localhost:3001/"
+const apiEndpoint = `http://${process.env.REACT_APP_IP}:3001/`
 
 export default apiEndpoint

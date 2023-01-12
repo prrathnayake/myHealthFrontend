@@ -13,6 +13,7 @@ import { roleContext } from "./resources/contexts/role.js";
 import { useState } from "react";
 
 function App() {
+  console.log(process.env.REACT_APP_IP)
   const [role, setRole] = useState(0);
   return (
     <roleContext.Provider value={{ role, setRole }}>
