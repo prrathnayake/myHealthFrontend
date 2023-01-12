@@ -31,3 +31,9 @@ jobs:
       run: npm run build --if-present
     - name: Test
       run: npm test
+    - name: Push docker image
+      run: |
+        docker build -t my-health-frontend .
+        echo ${{ secrets.DOCKER_SECRET }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        docker tag my-health-frontend pasanransika/my-health-frontend
+        docker push pasanransika/my-health-frontend
