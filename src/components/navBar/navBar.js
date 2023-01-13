@@ -12,7 +12,7 @@ export default function NavBar() {
     setRole(0);
     return navigate("/login");
   };
-  
+  console.log(role)
   return (
     
     <div className="Navbar">

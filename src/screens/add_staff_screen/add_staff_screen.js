@@ -55,7 +55,6 @@ export default function AddStaffScreen() {
       },
     })
       .then((res) => {
-        console.log(res.data);
         if (res.data === "not authenticated") {
           navigate(`/login`);
         }
@@ -76,7 +75,17 @@ export default function AddStaffScreen() {
     getAreaList();
   }, [navigate, role, validate]);
 
+  useEffect(() => {
+    const accessToken = JSON.parse(localStorage.getItem("token"));
+    if (accessToken === null) return navigate("/login");
+    validate(accessToken);
+    if (role !== 1) {
+      navigate(`/`);
+    }
+  }, );
+
   const register = async () => {
+   
     const accessToken = JSON.parse(localStorage.getItem("token"));
     await axios({
       method: "POST",

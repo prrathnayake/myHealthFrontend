@@ -10,11 +10,41 @@ import AddAvailableTimeScreen from "./screens/add_available_time_screen/add_avai
 import PatientsScreen from "./screens/patients_screen/patients_screen";
 import ProfileScreen from "./screens/profile_screen/profile_screen";
 import { roleContext } from "./resources/contexts/role.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import apiEndpoint from "./utils/api.js";
+import { useNavigate } from "react-router";
 
 function App() {
-  console.log(process.env.REACT_APP_IP)
+  const navigate = useNavigate();
   const [role, setRole] = useState(0);
+
+  const getRole = async (accessToken, id) => {
+    await axios({
+      method: "POST",
+      url: `${apiEndpoint}auth/getRole`,
+      data: {
+        accessToken: accessToken,
+        id: id
+      },
+    })
+      .then((res) => {
+        if (res.data === "not authenticated") {
+          navigate(`/login`);
+        } else {
+          setRole(res.data.role);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    const accessToken = JSON.parse(localStorage.getItem("token"));
+    const id = JSON.parse(localStorage.getItem("id"));
+    getRole(accessToken, id);
+  });
   return (
     <roleContext.Provider value={{ role, setRole }}>
       <div className="App">

@@ -9,33 +9,38 @@ export default function LoginScreen() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [err, setErr] = useState('');
-  const {setRole} = useContext(roleContext);
+  const [err, setErr] = useState("");
+  const { setRole } = useContext(roleContext);
 
-  const login = async(e) => {
-    e.preventDefault()
-    if (email !== '' || password !== ''){
+  const login = async (e) => {
+    e.preventDefault();
+    if (email !== "" || password !== "") {
       try {
-        setEmail('')
-        setPassword('')
-        await axios.post(`${apiEndpoint}auth/login`, {
-          email: email,
-          password: password
-        }).then((res) => {
-          if (res.data.accessToken)
-          {
-            localStorage.setItem('token', JSON.stringify(res.data.accessToken))
-            setRole(res.data.role);
-            if(res.data.role === 'admin') return navigate(`/admin`)
-            navigate(`/`)
-          }else {
-            setErr(res.data)
-          }
-        })       
-      }catch(error) {
-        console.log(error)
+        setEmail("");
+        setPassword("");
+        await axios
+          .post(`${apiEndpoint}auth/login`, {
+            email: email,
+            password: password,
+          })
+          .then((res) => {
+            if (res.data.accessToken) {
+              localStorage.setItem(
+                "token",
+                JSON.stringify(res.data.accessToken)
+              );
+              localStorage.setItem("id", JSON.stringify(res.data.id));
+              console.log(res.data.role);
+              setRole(res.data.role);
+              if (res.data.role === "admin") return navigate(`/admin`);
+              navigate(`/`);
+            } else {
+              setErr(res.data);
+            }
+          });
+      } catch (error) {
+        console.log(error);
       }
-      
     }
   };
   return (
@@ -57,17 +62,17 @@ export default function LoginScreen() {
             Password
           </label>
           <input
-            placeholder="Enter your Email"
+            placeholder="Enter your Password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {err ? <p className='err-msg'>{err}</p> : null}
+          {err ? <p className="err-msg">{err}</p> : null}
           <button type="submit" onClick={login}>
             LogIn
           </button>
-          <label className="forget">Forget password? </label>
+          {/* <label className="forget">Forget password? </label> */}
         </form>
       </div>
     </div>

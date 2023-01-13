@@ -25,7 +25,6 @@ export default function HomeScreen() {
       },
     })
       .then((res) => {
-        console.log(res.data);
         if (res.data === "not authenticated") {
           navigate(`/login`);
         }

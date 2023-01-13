@@ -65,7 +65,7 @@ export default function AppointmentScreen() {
       navigate(`/`);
     }
     getSchedules();
-  }, [date, getSchedules, navigate, role, validate]);
+  },[role]);
 
 
   
