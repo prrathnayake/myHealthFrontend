@@ -44,9 +44,5 @@ jobs:
         username: ${{ secrets.LINODE_USERNAME }}
         password: ${{ secrets.LINODE_PASSWORD }}
         script: |
-          apt update
-          apt-get install curl wget
           docker-compose down
-          rm docker-compose.yml
-          curl -LJO https://github.com/prrathnayake/myHealthAPI/raw/master/docker-compose.yml
           docker-compose up -d
