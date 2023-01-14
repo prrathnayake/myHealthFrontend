@@ -7,7 +7,6 @@ import apiEndpoint from "../../utils/api";
 
 export default function HomeScreen() {
   const navigate = useNavigate();
-  let slideIndex = 0;
 
   useEffect(() => {
     const accessToken = JSON.parse(localStorage.getItem("token"));
