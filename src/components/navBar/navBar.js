@@ -60,6 +60,9 @@ export default function NavBar() {
                 <Link className="text-link sub-link" to="/addAvailableTime">
                   ADD AVAILABLE TIME
                 </Link>
+                <Link className="text-link sub-link" to="/addHospital">
+                  ADD HOSPITAL
+                </Link>
               </div>
             </div>
           </li>

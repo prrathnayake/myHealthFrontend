@@ -9,9 +9,11 @@ export default function AddRoleScreen() {
   const navigate = useNavigate();
   const { role } = useContext(roleContext);
   const [doctorRole, setDoctorRole] = useState("");
+  const [err, setErr] = useState("");
 
-  const submit = async () => {
-    window.location.reload(false);
+  const submit = async (e) => {
+    e.preventDefault();
+    if(doctorRole === '') return setErr("please fill all");
     await axios({
       method: "POST",
       url: `${apiEndpoint}role`,
@@ -78,6 +80,7 @@ export default function AddRoleScreen() {
           >
             Add
           </button>
+          {err === "" ? null : <p>{err}</p>}
         </div>
       </div>
     </>

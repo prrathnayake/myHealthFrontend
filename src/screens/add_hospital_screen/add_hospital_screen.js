@@ -12,8 +12,12 @@ export default function AddHospitalScreen() {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [mobile, setMoble] = useState("");
+  const [err, setErr] = useState("");
 
   const register = async () => {
+    if (name === "" || address === "" || mobile === "") {
+      return setErr("please fill all");
+    }
     await axios({
       method: "POST",
       url: `${apiEndpoint}hospitals/addHospital`,
@@ -109,6 +113,7 @@ export default function AddHospitalScreen() {
           >
             LogIn
           </button>
+          {err === "" ? null : <p>{err}</p>}
         </form>
       </div>
     </>

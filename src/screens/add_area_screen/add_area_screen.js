@@ -9,10 +9,11 @@ export default function AddAreaScreen() {
   const navigate = useNavigate();
   const {role} = useContext( roleContext );
   const [area, setArea] = useState("");
-  
+  const [err, setErr] = useState("");
 
-  const submit = async () => {
-    window.location.reload(false);
+  const submit = async (e) => {
+    e.preventDefault();
+    if(area === '') return setErr("please fill all");
     await axios({
       method: 'POST',
       url: `${apiEndpoint}area`,
@@ -77,6 +78,7 @@ export default function AddAreaScreen() {
           >
             Add
           </button>
+          {err === "" ? null : <p>{err}</p>}
         </form>
       </div>
     </>

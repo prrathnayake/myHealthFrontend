@@ -19,7 +19,7 @@ export default function AddAvailableTimeScreen() {
   const [hospital, setHospital] = useState("");
   const [day, setDay] = useState("");
   const { role } = useContext(roleContext);
-
+  const [err, setErr] = useState("");
   const [doctorList, setDoctorList] = useState([]);
   const [hospitalList, setHospitalList] = useState([]);
   const dayOfWeek = [
@@ -60,9 +60,7 @@ export default function AddAvailableTimeScreen() {
     }
     getHospitalList();
     getDoctorList();
-
   }, [navigate, role]);
-
 
   const getDoctorList = async () => {
     await axios({
@@ -99,6 +97,16 @@ export default function AddAvailableTimeScreen() {
   };
 
   const register = async () => {
+    if (
+      doctor === "" ||
+      hospital === "" ||
+      role === "" ||
+      day === "" ||
+      startTime === "" ||
+      endTime === ""
+    ) {
+      return setErr("please fill all");
+    }
     await axios({
       method: "POST",
       url: `${apiEndpoint}addAvailableTime`,
@@ -133,7 +141,7 @@ export default function AddAvailableTimeScreen() {
             >
               <option value="" />
               {doctorList.map((doctor) => (
-                <option key={doctor["staffID"]}  value={doctor["staffID"]}>
+                <option key={doctor["staffID"]} value={doctor["staffID"]}>
                   Dr. {doctor["firstName"]} {doctor["lastName"]}
                 </option>
               ))}
@@ -152,7 +160,10 @@ export default function AddAvailableTimeScreen() {
             >
               <option value="" />
               {hospitalList.map((hospital) => (
-                <option key={hospital["hospitalID"]} value={hospital["hospitalID"]}>
+                <option
+                  key={hospital["hospitalID"]}
+                  value={hospital["hospitalID"]}
+                >
                   {hospital["name"]}
                 </option>
               ))}
@@ -171,7 +182,9 @@ export default function AddAvailableTimeScreen() {
             >
               <option value="" />
               {dayOfWeek.map((day) => (
-                <option key={day} value={day}>{day}</option>
+                <option key={day} value={day}>
+                  {day}
+                </option>
               ))}
             </select>
           </div>
@@ -203,6 +216,7 @@ export default function AddAvailableTimeScreen() {
           >
             Submit
           </button>
+          {err === "" ? null : <p>{err}</p>}
         </form>
       </div>
     </>
