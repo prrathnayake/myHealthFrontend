@@ -54,7 +54,7 @@ export default function AppointmentScreen() {
     const accessToken = JSON.parse(localStorage.getItem("token"));
     if (accessToken === null) return navigate("/login");
     validate(accessToken);
-    if(role !== 1 && 2){
+    if(role !== 1 && role !== 2){
       navigate(`/`);
     }
     getSchedules();
