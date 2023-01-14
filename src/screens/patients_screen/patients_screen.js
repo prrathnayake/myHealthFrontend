@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import NavBar from "../../components/navBar/navBar";
 import apiEndpoint from "../../utils/api";
+import './patients_screen.css'
 
 export default function PatientsScreen() {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ export default function PatientsScreen() {
           </thead>
           <tbody>
             {patients.map((patient) => (
-              <tr key={patient.id}>
+              <tr key={patient.patientID}>
                 <td>
                   {patient.firstName} {patient.lastName}
                 </td>

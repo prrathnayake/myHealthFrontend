@@ -1,0 +1,14 @@
+table,
+th,
+td {
+  border: 1px solid;
+}
+
+th{
+    width: 200px;
+}
+
+th,
+td {
+  padding: 10px;
+}
