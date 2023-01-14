@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -37,3 +37,12 @@ jobs:
         echo ${{ secrets.DOCKER_SECRET }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
         docker tag my-health-frontend pasanransika/my-health-frontend
         docker push pasanransika/my-health-frontend
+    - name: Deploy to Linode
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.LINODE_IP }}
+        username: ${{ secrets.LINODE_USERNAME }}
+        password: ${{ secrets.LINODE_PASSWORD }}
+        script: |
+          docker-compose down
+          docker-compose up -d
