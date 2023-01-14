@@ -17,12 +17,14 @@ export default function AppointmentScreen() {
   const [date, setDate] = React.useState(dayjs(Date.now() + ( 3600 * 1000 * 24)));
   const [scheduleList, setScheduleList] = useState([]);
   const {role} = useContext( roleContext );
+  const [isReload, setIsReload] =useState(false);
 
   useEffect(() => {
+    const id = JSON.parse(localStorage.getItem("id"));
     const getSchedules = async () => {
       await axios({
         method: "GET",
-        url: `${apiEndpoint}schedules/doctorId?id=2&date=${date.format('YYYY-MM-DD')}`
+        url: `${apiEndpoint}schedules/doctorId?id=${id}&date=${date.format('YYYY-MM-DD')}`
       })
         .then((res) => {
           setScheduleList(res.data);
@@ -41,7 +43,6 @@ export default function AppointmentScreen() {
         },
       })
         .then((res) => {
-          console.log(res.data);
           if (res.data === "not authenticated") {
             navigate(`/login`);
           }
@@ -58,7 +59,7 @@ export default function AppointmentScreen() {
       navigate(`/`);
     }
     getSchedules();
-  },[date, navigate, role]);
+  },[date, navigate, role, isReload]);
 
 
   
@@ -83,7 +84,7 @@ export default function AppointmentScreen() {
         <div className="appointment-bar">
           <h1>Appointments</h1>
           {scheduleList.map((schedule) => (
-            <AppointmentCard scedule={schedule}/>
+            <AppointmentCard key = {schedule['scheduleID']} scedule={schedule} isReload={isReload} setIsReload={setIsReload}/>
           ))}
         </div>
       </div>
