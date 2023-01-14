@@ -30,7 +30,7 @@ function App() {
     })
       .then((res) => {
         if (res.data === "not authenticated") {
-          navigate(`/login`);
+
         } else {
           setRole(res.data.role);
         }

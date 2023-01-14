@@ -19,6 +19,16 @@ export default function AddStaffScreen() {
   const [roleList, setRoleList] = useState([]);
   const [areaList, setAreaList] = useState([]);
 
+  const [isShowArea, setIsShowArea] = useState(false);
+
+  useEffect(() => {
+    if (doctorRole === '2') {
+      setIsShowArea(true);
+    } else {
+      setIsShowArea(false);
+    }
+  }, [doctorRole]);
+
   const getRoleList = async () => {
     await axios({
       method: "GET",
@@ -45,47 +55,39 @@ export default function AddStaffScreen() {
       });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const validate = async (accessToken) => {
-    await axios({
-      method: "POST",
-      url: `${apiEndpoint}auth/validateToken`,
-      data: {
-        accessToken: accessToken,
-      },
-    })
-      .then((res) => {
-        if (res.data === "not authenticated") {
-          navigate(`/login`);
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
   useEffect(() => {
-    const accessToken = JSON.parse(localStorage.getItem("token"));
-    if (accessToken === null) return navigate("/login");
-    validate(accessToken);
-    if (role !== 1) {
-      navigate(`/`);
-    }
+    const checkAccess = () => {
+      const accessToken = JSON.parse(localStorage.getItem("token"));
+
+      if (accessToken === null) return navigate("/login");
+      validate(accessToken);
+      if (role !== 1) {
+        navigate(`/`);
+      }
+    };
+    const validate = async (accessToken) => {
+      await axios({
+        method: "POST",
+        url: `${apiEndpoint}auth/validateToken`,
+        data: {
+          accessToken: accessToken,
+        },
+      })
+        .then((res) => {
+          if (res.data === "not authenticated") {
+            navigate(`/login`);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+    checkAccess();
     getRoleList();
     getAreaList();
-  }, [navigate, role, validate]);
-
-  useEffect(() => {
-    const accessToken = JSON.parse(localStorage.getItem("token"));
-    if (accessToken === null) return navigate("/login");
-    validate(accessToken);
-    if (role !== 1) {
-      navigate(`/`);
-    }
-  }, );
+  }, [navigate, role]);
 
   const register = async () => {
-   
     const accessToken = JSON.parse(localStorage.getItem("token"));
     await axios({
       method: "POST",
@@ -94,7 +96,7 @@ export default function AddStaffScreen() {
         firstName: firstName,
         lastName: lastName,
         area: area,
-        role: role,
+        role: doctorRole,
         mobile: mobile,
         email: email,
         accessToken: accessToken,
@@ -145,23 +147,7 @@ export default function AddStaffScreen() {
               required
             />
           </div>
-          <div className="add-staff-screen-input-div">
-            <label className="label" name="email">
-              Area
-            </label>
-            <select
-              id="area"
-              name="area"
-              className="add-staff-screen-dropdown"
-              value={area}
-              onChange={(e) => setArea(e.target.value)}
-            >
-              <option value="" />
-              {areaList.map((area) => (
-                <option value={area["areaID"]}>{area["discription"]}</option>
-              ))}
-            </select>
-          </div>
+
           <div className="add-staff-screen-input-div">
             <label className="label" name="email">
               Email
@@ -203,12 +189,32 @@ export default function AddStaffScreen() {
               ))}
             </select>
           </div>
+          {isShowArea ? (
+            <div className="add-staff-screen-input-div">
+              <label className="label" name="email">
+                Area
+              </label>
+              <select
+                id="area"
+                name="area"
+                className="add-staff-screen-dropdown"
+                value={area}
+                onChange={(e) => setArea(e.target.value)}
+              >
+                <option value="" />
+                {areaList.map((area) => (
+                  <option value={area["areaID"]}>{area["discription"]}</option>
+                ))}
+              </select>
+            </div>
+          ) : null}
+
           <button
             className="add-staff-screen-form-button"
             type="button"
             onClick={register}
           >
-            LogIn
+            Submit
           </button>
         </form>
       </div>
