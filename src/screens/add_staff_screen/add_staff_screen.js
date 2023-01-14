@@ -185,7 +185,7 @@ export default function AddStaffScreen() {
             >
               <option value="" />
               {roleList.map((role) => (
-                <option value={role["roleID"]}>{role["discription"]}</option>
+                <option key={role["roleID"]} value={role["roleID"]}>{role["discription"]}</option>
               ))}
             </select>
           </div>
@@ -203,7 +203,7 @@ export default function AddStaffScreen() {
               >
                 <option value="" />
                 {areaList.map((area) => (
-                  <option value={area["areaID"]}>{area["discription"]}</option>
+                  <option key={area["areaID"]} value={area["areaID"]}>{area["discription"]}</option>
                 ))}
               </select>
             </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import NavBar from "../../components/navBar/navBar";
 import "./home_screen.css";
@@ -13,7 +13,7 @@ export default function HomeScreen() {
     const accessToken = JSON.parse(localStorage.getItem("token"));
     if (accessToken === null) return navigate("/login");
     validate(accessToken);
-    showSlides();
+    // showSlides();
   });
 
   const validate = async (accessToken) => {
@@ -34,19 +34,45 @@ export default function HomeScreen() {
       });
   };
 
-  function showSlides() {
-    let i;
-    let slides = document.getElementsByClassName("panel-image");
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [slides] = useState([
+    {
+        id: 1,
+        src: require("../../resources/Images/home1.jpg"),
+        caption: 'Image 1'
+    },
+    {
+        id: 2,
+        src: require("../../resources/Images/home2.jpg"),
+        caption: 'Image 2'
+    },
+    {
+        id: 3,
+        src: require("../../resources/Images/home3.jpg"),
+        caption: 'Image 3'
     }
-    slideIndex++;
-    if (slideIndex > slides.length) {
-      slideIndex = 1;
-    }
-    slides[slideIndex - 1].style.display = "block";
-    setTimeout(showSlides, 5000);
-  }
+]);
+
+  // function showSlides() {
+  //   let i;
+  //   let slides = document.getElementsByClassName("panel-image");
+  //   for (i = 0; i < slides.length; i++) {
+  //     slides[i].style.display = "none";
+  //   }
+  //   slideIndex++;
+  //   if (slideIndex > slides.length) {
+  //     slideIndex = 1;
+  //   }
+  //   slides[slideIndex - 1].style.display = "block";
+  //   setTimeout(showSlides, 5000);
+  // }
+
+  useEffect(() => {
+    let slideInterval = setInterval(() => {
+        setCurrentSlide((currentSlide + 1) % slides.length);
+    }, 4000);
+    return () => clearInterval(slideInterval);
+}, [currentSlide, slides]);
 
   return (
     <>
@@ -58,21 +84,14 @@ export default function HomeScreen() {
         </div>
         <div className="home-image-panel">
           <div className="image-panel">
-            <img
-              className="panel-image"
-              src={require("../../resources/Images/home1.jpg")}
-              alt="home1"
-            />
-            <img
-              className="panel-image"
-              src={require("../../resources/Images/home2.jpg")}
-              alt="home2"
-            />
-            <img
-              className="panel-image"
-              src={require("../../resources/Images/home3.jpg")}
-              alt="home3"
-            />
+          {slides.map((slide, index) => (
+            <div
+                key={slide.id}
+                 style={{ display: index === currentSlide ? 'block' : 'none' }}
+            >
+                <img className="panel-image" src={slide.src} alt={slide.caption} />
+            </div>
+        ))}
           </div>
         </div>
       </div>

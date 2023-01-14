@@ -133,7 +133,7 @@ export default function AddAvailableTimeScreen() {
             >
               <option value="" />
               {doctorList.map((doctor) => (
-                <option value={doctor["staffID"]}>
+                <option key={doctor["staffID"]}  value={doctor["staffID"]}>
                   Dr. {doctor["firstName"]} {doctor["lastName"]}
                 </option>
               ))}
@@ -152,7 +152,7 @@ export default function AddAvailableTimeScreen() {
             >
               <option value="" />
               {hospitalList.map((hospital) => (
-                <option value={hospital["hospitalID"]}>
+                <option key={hospital["hospitalID"]} value={hospital["hospitalID"]}>
                   {hospital["name"]}
                 </option>
               ))}
@@ -171,7 +171,7 @@ export default function AddAvailableTimeScreen() {
             >
               <option value="" />
               {dayOfWeek.map((day) => (
-                <option value={day}>{day}</option>
+                <option key={day} value={day}>{day}</option>
               ))}
             </select>
           </div>
