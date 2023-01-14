@@ -13,28 +13,29 @@ export default function ChatListScreen() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const validate = async (accessToken) => {
+      await axios({
+        method: "POST",
+        url: `${apiEndpoint}auth/validateToken`,
+        data: {
+          accessToken: accessToken,
+        },
+      })
+        .then((res) => {
+          if (res.data === "not authenticated") {
+            navigate(`/login`);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
     const accessToken = JSON.parse(localStorage.getItem("token"));
     if (accessToken === null) return navigate("/login");
     validate(accessToken);
-  },[]);
+  },[navigate]);
 
-  const validate = async (accessToken) => {
-    await axios({
-      method: "POST",
-      url: `${apiEndpoint}auth/validateToken`,
-      data: {
-        accessToken: accessToken,
-      },
-    })
-      .then((res) => {
-        if (res.data === "not authenticated") {
-          navigate(`/login`);
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+
 
   const getChatDetails = async () => {
     const id = JSON.parse(localStorage.getItem("id"));

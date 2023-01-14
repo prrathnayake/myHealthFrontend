@@ -18,26 +18,20 @@ export default function AppointmentScreen() {
   const [scheduleList, setScheduleList] = useState([]);
   const {role} = useContext( roleContext );
 
-  // const isWeekend = (date) => {
-  //   const day = date.day();
-  //   return day === 0 || day === 6;
-  // };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getSchedules = async () => {
-    await axios({
-      method: "GET",
-      url: `${apiEndpoint}schedules/doctorId?id=2&date=${date.format('YYYY-MM-DD')}`
-    })
-      .then((res) => {
-        setScheduleList(res.data);
+  useEffect(() => {
+    const getSchedules = async () => {
+      await axios({
+        method: "GET",
+        url: `${apiEndpoint}schedules/doctorId?id=2&date=${date.format('YYYY-MM-DD')}`
       })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+        .then((res) => {
+          setScheduleList(res.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const validate = async (accessToken) => {
       await axios({
         method: "POST",
@@ -57,15 +51,14 @@ export default function AppointmentScreen() {
         });
     };
 
-  useEffect(() => {
     const accessToken = JSON.parse(localStorage.getItem("token"));
     if (accessToken === null) return navigate("/login");
     validate(accessToken);
-    if(role !== 1){
+    if(role !== 1 && 2){
       navigate(`/`);
     }
     getSchedules();
-  },[role]);
+  },[date, navigate, role]);
 
 
   

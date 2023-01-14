@@ -33,6 +33,25 @@ export default function AddAvailableTimeScreen() {
   ];
 
   useEffect(() => {
+    const validate = async (accessToken) => {
+      await axios({
+        method: "POST",
+        url: `${apiEndpoint}auth/validateToken`,
+        data: {
+          accessToken: accessToken,
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data === "not authenticated") {
+            navigate(`/login`);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+
     const accessToken = JSON.parse(localStorage.getItem("token"));
     if (accessToken === null) return navigate("/login");
     validate(accessToken);
@@ -41,28 +60,10 @@ export default function AddAvailableTimeScreen() {
     }
     getHospitalList();
     getDoctorList();
-  // eslint-disable-next-line no-use-before-define
-  }, [navigate, role, validate]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const validate = async (accessToken) => {
-    await axios({
-      method: "POST",
-      url: `${apiEndpoint}auth/validateToken`,
-      data: {
-        accessToken: accessToken,
-      },
-    })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data === "not authenticated") {
-          navigate(`/login`);
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+  }, [navigate, role]);
+
+
   const getDoctorList = async () => {
     await axios({
       method: "GET",

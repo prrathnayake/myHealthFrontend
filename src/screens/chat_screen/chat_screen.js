@@ -29,28 +29,30 @@ export default function ChatScreen() {
 
   const navigate = useNavigate();
   useEffect(() => {
+    const validate = async (accessToken) => {
+      await axios({
+        method: "POST",
+        url: `${apiEndpoint}auth/validateToken`,
+        data: {
+          accessToken: accessToken,
+        },
+      })
+        .then((res) => {
+          if (res.data === "not authenticated") {
+            navigate(`/login`);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+
     const accessToken = JSON.parse(localStorage.getItem("token"));
     if (accessToken === null) return navigate("/login");
     validate(accessToken);
-  }, []);
+  }, [navigate]);
 
-  const validate = async (accessToken) => {
-    await axios({
-      method: "POST",
-      url: `${apiEndpoint}auth/validateToken`,
-      data: {
-        accessToken: accessToken,
-      },
-    })
-      .then((res) => {
-        if (res.data === "not authenticated") {
-          navigate(`/login`);
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+
 
   useEffect(() => {
     const unsubscribe = async () => {
@@ -63,7 +65,7 @@ export default function ChatScreen() {
     };
 
     unsubscribe();
-  }, [messages]);
+  }, [collectionRef, messages]);
 
   async function handleSubmit(event) {
     event.preventDefault();
