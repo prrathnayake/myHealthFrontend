@@ -14,6 +14,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import apiEndpoint from "./utils/api.js";
 import { useNavigate } from "react-router";
+import ChatScreen from "./screens/chat_screen/chat_screen";
+import ChatListScreen from "./screens/chat_list_screen/chat_list_screen";
 
 function App() {
   const navigate = useNavigate();
@@ -60,6 +62,8 @@ function App() {
             element={<AddAvailableTimeScreen />}
           />
           <Route path="/patients" element={<PatientsScreen />} />
+          <Route path="/chats" element={<ChatListScreen />} />
+          <Route path="/chatScreen/:roomId/:uid" element={<ChatScreen />} />
           <Route path="/profile" element={<ProfileScreen />} />
           <Route
             path="*"

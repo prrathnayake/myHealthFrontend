@@ -34,6 +34,11 @@ export default function NavBar() {
           </Link>
         </li>
         <li>
+          <Link className="text-link" to="/chats">
+            CHATS
+          </Link>
+        </li>
+        <li>
           <Link className="text-link" to="/profile">
             PROFILE
           </Link>
