@@ -1,0 +1,14 @@
+.createPerscription-screen{
+    height: calc(100vh - 105px);
+}
+
+.add-staff-screen-input-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.add-staff-screen-input-div textarea{
+    margin-left: 10px;
+    padding: 10px;
+}

@@ -5,16 +5,15 @@ import { roleContext } from "../../resources/contexts/role.js";
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const {role, setRole} = useContext( roleContext );
+  const { role, setRole } = useContext(roleContext);
 
   const logout = () => {
     localStorage.removeItem("token");
     setRole(0);
     return navigate("/login");
   };
-  console.log(role)
+  console.log(role);
   return (
-    
     <div className="Navbar">
       <img src={require("../../resources/Images/logo.png")} alt="Logo" />
       <ul className="list-item">
@@ -41,6 +40,11 @@ export default function NavBar() {
         <li>
           <Link className="text-link" to="/profile">
             PROFILE
+          </Link>
+        </li>
+        <li>
+          <Link className="text-link sub-link" to="/createPrescription">
+            CREATE PRESCRIPTION
           </Link>
         </li>
         {role === 1 ? (

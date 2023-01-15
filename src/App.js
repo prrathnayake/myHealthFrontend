@@ -15,6 +15,7 @@ import axios from "axios";
 import apiEndpoint from "./utils/api.js";
 import ChatScreen from "./screens/chat_screen/chat_screen";
 import ChatListScreen from "./screens/chat_list_screen/chat_list_screen";
+import CreatePerscription from "./screens/create_prescription/create_prescription";
 
 function App() {
   const [role, setRole] = useState(0);
@@ -63,6 +64,7 @@ function App() {
           <Route path="/chats" element={<ChatListScreen />} />
           <Route path="/chatScreen/:roomId/:uid" element={<ChatScreen />} />
           <Route path="/profile" element={<ProfileScreen />} />
+          <Route path="/createPrescription" element={<CreatePerscription />} />
           <Route
             path="*"
             element={
