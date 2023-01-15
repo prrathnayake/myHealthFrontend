@@ -54,6 +54,7 @@ export default function ChatListScreen() {
   useEffect(() => {
 
     const unsubscribe = async () => {
+      console.log('firebase read');
       if (uid === 'no uid') return console.log('no chats')
       const collectionRef = collection(db, `doctors/${uid}/chats`);
       const data = getDocs(collectionRef);

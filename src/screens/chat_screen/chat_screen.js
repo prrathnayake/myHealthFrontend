@@ -23,13 +23,10 @@ export default function ChatScreen() {
   let patientUID = roomId.toString();
   patientUID = patientUID.replaceAll(`${uid.toString()}`, "");
 
-  const collectionRef = collection(db, `chats/${roomId}/messages`);
-  const docCollectionRef = doc(db, `doctors/${uid}/chats/${roomId}`);
-  const patientCollectionRef = doc(db, `users/${patientUID}/chats/${roomId}`);
-
   const navigate = useNavigate();
   useEffect(() => {
     const validate = async (accessToken) => {
+      console.log('validate');
       await axios({
         method: "POST",
         url: `${apiEndpoint}auth/validateToken`,
@@ -55,7 +52,9 @@ export default function ChatScreen() {
 
 
   useEffect(() => {
+    const collectionRef = collection(db, `chats/${roomId}/messages`);
     const unsubscribe = async () => {
+      console.log('firebase read');
       const data = getDocs(query(collectionRef, orderBy("createdOn", "asc")));
       setMessages(
         (await data).docs.map((doc) => {
@@ -63,11 +62,13 @@ export default function ChatScreen() {
         })
       );
     };
-
     unsubscribe();
-  }, [collectionRef, messages]);
+  },[roomId]);
 
   async function handleSubmit(event) {
+    const collectionRef = collection(db, `chats/${roomId}/messages`);
+    const docCollectionRef = doc(db, `doctors/${uid}/chats/${roomId}`);
+    const patientCollectionRef = doc(db, `users/${patientUID}/chats/${roomId}`);
     event.preventDefault();
     const message = event.target.elements.message.value;
     event.target.elements.message.value = "";
@@ -78,6 +79,17 @@ export default function ChatScreen() {
       createdOn: firebase.firestore.Timestamp.now(),
     });
 
+    const unsubscribe = async () => {
+      console.log('firebase read');
+      const data = getDocs(query(collectionRef, orderBy("createdOn", "asc")));
+      setMessages(
+        (await data).docs.map((doc) => {
+          return { ...doc.data(), id: doc.id };
+        })
+      );
+    };
+    unsubscribe();
+
     await setDoc(docCollectionRef, {
       lastMessage: message,
       receiverUID: uid,
@@ -87,6 +99,7 @@ export default function ChatScreen() {
       lastMessage: message,
       receiverUID: uid,
     });
+
   }
 
   return (
