@@ -4,7 +4,7 @@ WORKDIR /usr/src/my-health-frontend
 
 COPY . .
 
-RUN npm install
+RUN npm install --force
 
 EXPOSE 3000
 
