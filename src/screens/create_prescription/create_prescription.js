@@ -57,7 +57,7 @@ export default function CreatePerscription() {
     const accessToken = JSON.parse(localStorage.getItem("token"));
     if (accessToken === null) return navigate("/login");
     validate(accessToken);
-    if (role !== 1) {
+    if (role !== 1 && role !== 2) {
       navigate(`/`);
     }
   });
@@ -79,8 +79,8 @@ export default function CreatePerscription() {
               Patient Name
             </label>
             <select
-              id="role"
-              name="role"
+              id="patient"
+              name="patient"
               className="add-staff-screen-dropdown"
               value={patients}
               onChange={(e) => setPatients(e.target.value)}

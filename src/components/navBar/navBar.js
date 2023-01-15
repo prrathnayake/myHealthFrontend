@@ -43,9 +43,17 @@ export default function NavBar() {
           </Link>
         </li>
         <li>
-          <Link className="text-link sub-link" to="/createPrescription">
-            CREATE PRESCRIPTION
-          </Link>
+          <div className="main-nav">
+            <p>PRESCRIPTIONS</p>
+            <div className="sub-nav">
+              <Link className="text-link sub-link" to="/createPrescription">
+                CREATE PRESCRIPTION
+              </Link>
+              <Link className="text-link sub-link" to="/sendPrescription">
+                SEND PRESCRIPTION
+              </Link>
+            </div>
+          </div>
         </li>
         {role === 1 ? (
           <li>
