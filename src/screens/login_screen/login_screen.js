@@ -30,6 +30,8 @@ export default function LoginScreen() {
                 JSON.stringify(res.data.accessToken)
               );
               localStorage.setItem("id", JSON.stringify(res.data.id));
+              localStorage.setItem("name", JSON.stringify(res.data.name));
+              console.log(res.data.role);
               console.log(res.data.role);
               setRole(res.data.role);
               if (res.data.role === "admin") return navigate(`/admin`);

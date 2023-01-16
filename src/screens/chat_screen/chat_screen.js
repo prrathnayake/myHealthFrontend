@@ -70,11 +70,12 @@ export default function ChatScreen() {
     const docCollectionRef = doc(db, `doctors/${uid}/chats/${roomId}`);
     const patientCollectionRef = doc(db, `users/${patientUID}/chats/${roomId}`);
     event.preventDefault();
+    const DoctorName = JSON.parse(localStorage.getItem("name"));
     const message = event.target.elements.message.value;
     event.target.elements.message.value = "";
     await addDoc(collectionRef, {
       message: message,
-      senderName: "Doctor",
+      senderName: DoctorName,
       senderUID: uid,
       createdOn: firebase.firestore.Timestamp.now(),
     });
@@ -93,11 +94,13 @@ export default function ChatScreen() {
     await setDoc(docCollectionRef, {
       lastMessage: message,
       receiverUID: uid,
+      receiverName: DoctorName,
     });
 
     await setDoc(patientCollectionRef, {
       lastMessage: message,
       receiverUID: uid,
+      receiverName: DoctorName,
     });
 
   }
