@@ -120,6 +120,9 @@ export default function AddAvailableTimeScreen() {
     }).catch(function (error) {
       console.log(error);
     });
+    setDoctor('');
+    setHospital('');
+    setDay('');
   };
 
   return (
