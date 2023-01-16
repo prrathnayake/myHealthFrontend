@@ -18,7 +18,7 @@ export default function AddRoleScreen() {
       method: "POST",
       url: `${apiEndpoint}role`,
       data: {
-        role: role.toLowerCase(),
+        role: doctorRole.toLowerCase(),
       },
     }).catch(function (error) {
       console.log(error);
