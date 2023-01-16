@@ -14,7 +14,8 @@ export default function AddHospitalScreen() {
   const [mobile, setMoble] = useState("");
   const [err, setErr] = useState("");
 
-  const register = async () => {
+  const register = async (e) => {
+    e.preventDedault();
     if (name === "" || address === "" || mobile === "") {
       return setErr("please fill all");
     }
@@ -35,33 +36,33 @@ export default function AddHospitalScreen() {
     setMoble("");
   };
 
-  const validate = async (accessToken) => {
-    await axios({
-      method: "POST",
-      url: `${apiEndpoint}auth/validateToken`,
-      data: {
-        accessToken: accessToken,
-      },
-    })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data === "not authenticated") {
-          navigate(`/login`);
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
   useEffect(() => {
+    const validate = async (accessToken) => {
+      await axios({
+        method: "POST",
+        url: `${apiEndpoint}auth/validateToken`,
+        data: {
+          accessToken: accessToken,
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data === "not authenticated") {
+            navigate(`/login`);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+
     const accessToken = JSON.parse(localStorage.getItem("token"));
     if (accessToken === null) return navigate("/login");
     validate(accessToken);
     if (role !== 1) {
       navigate(`/`);
     }
-  });
+  },[navigate, role]);
   return (
     <>
       <NavBar />
