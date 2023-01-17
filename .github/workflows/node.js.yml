@@ -48,9 +48,6 @@ jobs:
           docker-compose pull
           docker-compose build --no-cache
           docker-compose up -d --force-recreate
-    - name: Print latest commits
-      run: |
-        git log -n 10 > commits.txt
     - name: Send Email
       uses: dawidd6/action-send-mail@v3
       with:
@@ -60,6 +57,5 @@ jobs:
         password: ${{ secrets.GMAIL_PASSWORD }}
         subject: my-helath frontend.
         body: Application is released.
-        attachments: commits.txt
         to: pasanransika1@gmail.com
         from: ${{ secrets.GMAIL_ADDRESS }}
