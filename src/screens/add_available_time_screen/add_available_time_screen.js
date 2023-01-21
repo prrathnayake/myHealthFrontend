@@ -107,6 +107,11 @@ export default function AddAvailableTimeScreen() {
     ) {
       return setErr("please fill all");
     }
+
+    if (startTime >= endTime) {
+      return setErr("please set End Time larger than Start Time");
+    }
+
     await axios({
       method: "POST",
       url: `${apiEndpoint}addAvailableTime`,
@@ -120,9 +125,10 @@ export default function AddAvailableTimeScreen() {
     }).catch(function (error) {
       console.log(error);
     });
-    setDoctor('');
-    setHospital('');
-    setDay('');
+    setDoctor("");
+    setHospital("");
+    setDay("");
+    setErr("");
   };
 
   return (
