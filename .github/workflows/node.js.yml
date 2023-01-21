@@ -21,22 +21,28 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
     - name: Use Node.js  ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+        
     - name: Install dependencies
       run: npm install --force
+      
     - name: Build
       run: npm run build --if-present
+      
     - name: Test
       run: npm test
+      
     - name: Push docker image
       run: |
         docker build -t my-health-frontend .
         echo ${{ secrets.DOCKER_SECRET }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
         docker tag my-health-frontend pasanransika/my-health-frontend
         docker push pasanransika/my-health-frontend
+        
     - name: Deploy to Linode
       uses: appleboy/ssh-action@master
       with:
@@ -48,6 +54,7 @@ jobs:
           docker-compose pull
           docker-compose build --no-cache
           docker-compose up -d --force-recreate
+          
     - name: Send Email
       uses: dawidd6/action-send-mail@v3
       with:
