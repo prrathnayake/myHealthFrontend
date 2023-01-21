@@ -83,7 +83,8 @@ export default function AppointmentScreen() {
         </div>
         <div className="appointment-bar">
           <h1>Appointments</h1>
-          {scheduleList.map((schedule) => (
+          {scheduleList.length === 0 ? <h3 className="notAvailableMessage">No appointment available</h3> :
+          scheduleList.map((schedule) => (
             <AppointmentCard key = {schedule['scheduleID']} scedule={schedule} isReload={isReload} setIsReload={setIsReload}/>
           ))}
         </div>

@@ -63,7 +63,7 @@ export default function PatientsScreen() {
             </tr>
           </thead>
           <tbody>
-            {patients.map((patient) => (
+            {patients.length === 0 ? <h2 className="notAvailableMessage">No patients available</h2> :patients.map((patient) => (
               <tr key={patient.patientID}>
                 <td>
                   {patient.firstName} {patient.lastName}

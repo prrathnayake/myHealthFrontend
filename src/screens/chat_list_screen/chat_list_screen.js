@@ -75,7 +75,7 @@ export default function ChatListScreen() {
       <NavBar />
       <div>
         <ul>
-          {chats.map(({ id,receiverName }) => (
+          {chats.length === 0 ? <h2 className="notAvailableMessage">No chats available</h2> :chats.map(({ id,receiverName }) => (
             <li key={id}>
               <Link to={`/chatScreen/${id}/${uid}`}>{receiverName}</Link>
             </li>
