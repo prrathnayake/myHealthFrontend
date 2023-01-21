@@ -7,14 +7,10 @@ import apiEndpoint from "../../utils/api";
 
 export default function HomeScreen() {
   const navigate = useNavigate();
+  const [user, setUser] = useState();
 
   useEffect(() => {
-    const accessToken = JSON.parse(localStorage.getItem("token"));
-    if (accessToken === null) return navigate("/login");
-    validate(accessToken);
-    // showSlides();
-  });
-
+    
   const validate = async (accessToken) => {
     await axios({
       method: "POST",
@@ -32,6 +28,15 @@ export default function HomeScreen() {
         console.log(error);
       });
   };
+
+    const accessToken = JSON.parse(localStorage.getItem("token"));
+    if (accessToken === null) return navigate("/login");
+    validate(accessToken);
+    // showSlides();
+    const name = JSON.parse(localStorage.getItem("name"));
+    setUser(name);
+  }, [navigate]);
+
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [slides] = useState([
@@ -77,9 +82,8 @@ export default function HomeScreen() {
     <>
       <NavBar />
       <div className="home-screen">
-        <div>
-          {" "}
-          <p className="">Welcome</p>
+        <div className="welcomeMessages">
+          <p>Welcome, {user}</p>
         </div>
         <div className="home-image-panel">
           <div className="image-panel">

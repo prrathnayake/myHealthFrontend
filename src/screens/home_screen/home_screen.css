@@ -6,6 +6,7 @@
 .home-screen {
   height: calc(100vh - 80px);
   width: 100%;
+  overflow: hidden;
 }
 
 .home-image-panel {
@@ -24,4 +25,11 @@
   width: 500px;
   background-attachment: fixed;
   position: relative;
+}
+
+.welcomeMessages{
+  font-size: 50px;
+  padding-top: 30px;
+  padding-left: 300px;
+  width: 100%;
 }
