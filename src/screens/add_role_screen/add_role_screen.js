@@ -24,6 +24,7 @@ export default function AddRoleScreen() {
       console.log(error);
     });
     setDoctorRole("");
+    setErr("");
   };
 
   useEffect(() => {

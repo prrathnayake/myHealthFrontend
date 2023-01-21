@@ -142,6 +142,7 @@ export default function AddStaffScreen() {
     setLastName("");
     setEmail("");
     setMoble("");
+    setErr("");
   };
   return (
     <>

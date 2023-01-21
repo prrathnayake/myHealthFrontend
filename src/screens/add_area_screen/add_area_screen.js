@@ -24,6 +24,7 @@ export default function AddAreaScreen() {
       console.log(error);
     });
     setArea("");
+    setErr("");
   };
 
   const validate = async(accessToken) => {await axios({

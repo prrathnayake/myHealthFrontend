@@ -98,6 +98,7 @@ console.log(uids);
 
     setFile(null);
     setPatients('');
+    setErr("");
   };
   return (
     <>

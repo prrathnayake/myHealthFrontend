@@ -34,6 +34,7 @@ export default function AddHospitalScreen() {
     setName("");
     setAddress("");
     setMoble("");
+    setErr("");
   };
 
   useEffect(() => {
