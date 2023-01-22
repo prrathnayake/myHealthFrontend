@@ -14,24 +14,41 @@ import { useNavigate } from "react-router";
 
 export default function AppointmentScreen() {
   const navigate = useNavigate();
-  const [date, setDate] = React.useState(dayjs(Date.now() + ( 3600 * 1000 * 24)));
+  const [date, setDate] = React.useState(dayjs(Date.now() + 3600 * 1000 * 24));
   const [scheduleList, setScheduleList] = useState([]);
-  const {role} = useContext( roleContext );
-  const [isReload, setIsReload] =useState(false);
+  const { role } = useContext(roleContext);
+  const [isReload, setIsReload] = useState(false);
 
   useEffect(() => {
     const id = JSON.parse(localStorage.getItem("id"));
-    const getSchedules = async () => {
-      await axios({
-        method: "GET",
-        url: `${apiEndpoint}schedules/doctorId?id=${id}&date=${date.format('YYYY-MM-DD')}`
-      })
-        .then((res) => {
-          setScheduleList(res.data);
+    const getSchedules = async (role) => {
+      if (role === 1) {
+        await axios({
+          method: "GET",
+          url: `${apiEndpoint}schedules/?date=${date.format(
+            "YYYY-MM-DD"
+          )}`,
         })
-        .catch(function (error) {
-          console.log(error);
-        });
+          .then((res) => {
+            setScheduleList(res.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      } else {
+        await axios({
+          method: "GET",
+          url: `${apiEndpoint}schedules/doctorId?id=${id}&date=${date.format(
+            "YYYY-MM-DD"
+          )}`,
+        })
+          .then((res) => {
+            setScheduleList(res.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     };
 
     const validate = async (accessToken) => {
@@ -55,14 +72,12 @@ export default function AppointmentScreen() {
     const accessToken = JSON.parse(localStorage.getItem("token"));
     if (accessToken === null) return navigate("/login");
     validate(accessToken);
-    if(role !== 1 && role !== 2){
-      navigate(`/`);
+    if (role !== 1 && role !== 2) {
+      return navigate(`/`);
     }
-    getSchedules();
-  },[date, navigate, role, isReload]);
+    getSchedules(role);
+  }, [date, navigate, role, isReload]);
 
-
-  
   return (
     <>
       <NavBar />
@@ -83,10 +98,18 @@ export default function AppointmentScreen() {
         </div>
         <div className="appointment-bar">
           <h1>Appointments</h1>
-          {scheduleList.length === 0 ? <h3 className="notAvailableMessage">No appointment available</h3> :
-          scheduleList.map((schedule) => (
-            <AppointmentCard key = {schedule['scheduleID']} scedule={schedule} isReload={isReload} setIsReload={setIsReload}/>
-          ))}
+          {scheduleList.length === 0 ? (
+            <h3 className="notAvailableMessage">No appointment available</h3>
+          ) : (
+            scheduleList.map((schedule) => (
+              <AppointmentCard
+                key={schedule["scheduleID"]}
+                scedule={schedule}
+                isReload={isReload}
+                setIsReload={setIsReload}
+              />
+            ))
+          )}
         </div>
       </div>
     </>
