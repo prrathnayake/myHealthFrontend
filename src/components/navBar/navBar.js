@@ -37,11 +37,11 @@ export default function NavBar() {
             CHATS
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link className="text-link" to="/profile">
             PROFILE
           </Link>
-        </li>
+        </li> */}
         <li>
           <div className="main-nav">
             <p>PRESCRIPTIONS</p>
